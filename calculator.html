@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial,sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .calculator {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        input[type="date"] {
+            padding: 0.5rem;
+            margin: 1rem 0;
+            border: 1px solid aqua;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 0.7rem 2rem;
+            background: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition:background 0.3s;
+        }
+
+        button:hover{
+            background: red;
+        }
+
+        #result {
+            margin: top 1.5rem;
+            font-size: 1.2rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h2>Age calculator</h2>
+        <input type="date" id="birthdate">
+        <button onclick="calculateAge()">Calculate Age</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function calculateAge() {
+            const birthdateInput = document.getElementById('birthdate').value;
+            const birthdate = new Date(birthdateInput);
+            const currentDate = new Date();
+            
+    
+            // Validation
+            if (isNaN(birthdate.getTime())) {
+                alert('Please enter a valid date.');
+                return;
+            }
+    
+            if (birthdate > currentDate) {
+                alert('Birthdate cannot be in the future.');
+                return;
+            }
+    
+            let age = currentDate.getFullYear() - birthdate.getFullYear();
+            const monthDiff = currentDate.getMonth() - birthdate.getMonth();
+    
+            // Adjust age if the birthday hasn't occurred yet this year
+            if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthdate.getDate())) {
+                age--;
+            }
+    
+            // Display the result using template literals
+            document.getElementById('result').innerText = `Your age is ${age} years.`;
+        }
+    </script>
+</body>
+
+</html>
